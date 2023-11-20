@@ -8,21 +8,26 @@ namespace rockpaperscissors
 {
     internal class Game
     {
-        public enum Move { Sten = 1, Påse = 2, Sax = 3 };
+        public enum Move { Sten = 0, Påse = 1, Sax = 2 };
         public enum Outcome { Win, Loss, Tie }
 
         public class Logic
         {
             public static Outcome Wins(Move move1, Move move2)
             {
-                int m1 = (int) move1;
-                int m2 = (int) move2;
+                // sax: 3 påse: 2
+                int you = (int)move1, foe = (int)move2;
 
-                // you == (foe + 1) % 3
+                if (you == ((foe + 1) % 3))
+                {
+                    return Outcome.Win;
+                }
+                else if (you == foe)
+                {
+                    return Outcome.Tie;
+                }
 
-                if (move1 == move2) return Outcome.Tie;
-                else if (m1 == (m2 + 1) % 3) return Outcome.Win;
-                else return Outcome.Loss;
+                return Outcome.Loss;
             }
         }
 
