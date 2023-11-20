@@ -8,7 +8,9 @@ namespace rockpaperscissors
 {
 
 
-
+    // 1: här använder vi interface
+    // 2: vi skapar ett interface med dom funktioner vi vill ha
+    // 3: vi använder detta för att kunna använda oss av dependency injection i Player klassen
     interface IPlayer
     {
         public abstract string GetName();
@@ -60,25 +62,8 @@ namespace rockpaperscissors
         Game.Move IPlayer.GetMove()
         {
             var r = new Random();
-            Game.Move m;
 
-            switch(r.Next(0, 3))
-            {
-                case 0:
-                    m = Game.Move.Sten;
-                    break;
-                case 1:
-                    m = Game.Move.Sax;
-                    break;
-                case 2:
-                    m = Game.Move.Påse;
-                    break;
-                default:
-                    m = Game.Move.Sten;
-                    break;
-            }
-
-            return m;
+            return (Game.Move) r.Next(0,3);
         }
     }
 
