@@ -84,6 +84,11 @@ namespace rockpaperscissors
 
     internal class Player
     {
+        // 1: Här använder vi Beroendeinjektion
+        // 2: Klassen har en implm av IPlayer som har en funktion där spelarens drag väljs
+        // 3:
+        // - Vi använder detta för att enkelt kunna implementera olika typer av inputs för val av drag.
+        // - Detta låter oss enkelt implementera en AI-spelare, en riktig spelare, osv utan att behöva göra stora ändringar i koden   
         public IPlayer move;
         public string Name { get; private set; }
 

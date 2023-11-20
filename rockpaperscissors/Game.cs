@@ -15,9 +15,10 @@ namespace rockpaperscissors
         {
             public static Outcome Wins(Move move1, Move move2)
             {
-                // sax: 3 påse: 2
+                // Gör om enum till int
                 int you = (int)move1, foe = (int)move2;
 
+                // Allt jag ber om är guds förlåtelse efter detta underverk till kodrad
                 if (you == ((foe + 1) % 3))
                 {
                     return Outcome.Win;
