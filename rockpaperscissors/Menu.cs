@@ -37,7 +37,9 @@ namespace rockpaperscissors
             Console.ResetColor();
             return rv;
         }
-
+        // 1: här använder vi Overloading av instansmetoder
+        // 2: vi gör detta genom att definera en funktion med samma namn som en annan funktion fast med annorlunda signatur
+        // 3: Vi gör detta så man kan strunta i att ange vissa parametrar som kan anses onödiga om man vill anropa funktionen
         public static string? Ask(string question, ConsoleColor promptColour)
         {
             return Ask(question, promptColour, ConsoleColor.White);
@@ -61,6 +63,7 @@ namespace rockpaperscissors
         {
             ColourLog("Arvin & Jonathan presenterar...", ConsoleColor.DarkGray);
             ColourLog(logo, ConsoleColor.DarkRed);
+            Console.WriteLine("Ni spelar försten till 3. Du anger vad du vill spela genom att skriva sten, sax, eller påse.");
         }
     }
 }
