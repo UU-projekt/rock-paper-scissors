@@ -28,6 +28,20 @@ namespace rockpaperscissors
         }
         public static void ColourLog(string message, ConsoleColor colour)
             => ColourWrite($"{message}\n", colour);
+
+        public static string? Ask(string question, ConsoleColor promptColour, ConsoleColor answerColour)
+        {
+            ColourWrite(question, promptColour);
+            Console.ForegroundColor = answerColour;
+            string? rv = Console.ReadLine();
+            Console.ResetColor();
+            return rv;
+        }
+
+        public static string? Ask(string question, ConsoleColor promptColour)
+        {
+            return Ask(question, promptColour, ConsoleColor.White);
+        }
         public static Boolean PlayAgainstBot()
         {
             Console.Write("Vill du spela mot AI (");

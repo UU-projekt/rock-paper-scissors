@@ -9,8 +9,8 @@ namespace rockpaperscissors
 
 
     // 1: här använder vi interface
-    // 2: vi skapar ett interface med dom funktioner vi vill ha
-    // 3: vi använder detta för att kunna använda oss av dependency injection i Player klassen
+    // 2: vi skapar ett interface med dom funktioner vi vill ha                                 
+    // 3: vi använder detta för att kunna använda oss av dependency injection i Player klassen  
     interface IPlayer
     {
         public abstract string GetName();
@@ -21,16 +21,15 @@ namespace rockpaperscissors
     {
         public string GetName()
         {
-            Console.Write("Spelarens namn: ");
-            string? name = Console.ReadLine();
+            //Menu.ColourWrite("Spelarens namn: ", ConsoleColor.Magenta);
+            string? name = Menu.Ask("Spelarens namn: ", ConsoleColor.White, ConsoleColor.Magenta);
             if(name == null) return GetName();
             return name;
         }
 
         Game.Move IPlayer.GetMove()
         {
-            Console.Write("val: ");
-            string? move = Console.ReadLine();
+            string? move = Menu.Ask("drag: ", ConsoleColor.White, ConsoleColor.Blue);
             if (move == null || string.IsNullOrWhiteSpace(move)) move = "sten";
 
             Game.Move m = Game.Move.Sten;
@@ -83,10 +82,12 @@ namespace rockpaperscissors
             this.Name = move.GetName();
         }
 
-        public Player()
+        // 1: här använder vi constructor chaining
+        // 2: vi använder detta genom att 
+        // 3: vi vill kunna instansiera en Player utan några parametrar 
+        public Player() : this(new PersonPlayer())
         {
-            this.move = new PersonPlayer();
-            this.Name = move.GetName();
+
         }
     }
 }

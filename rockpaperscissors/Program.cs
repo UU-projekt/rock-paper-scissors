@@ -6,7 +6,7 @@ using rockpaperscissors;
     Inkapsling / Informationsgömning
     Overloading av instansmetoder
     Overloading av konstruktorer
-    Computed properties
+    Computed properties                 
     Objektkomposition                   CHECK(?)
     Interfaces                          CHECK
     Abstrakta klasser
@@ -14,7 +14,7 @@ using rockpaperscissors;
     Multipla gränssnitt
     Arv av klasser
     Default interface methods
-    Konstruktor-kedjning
+    Konstruktor-kedjning                CHECK
     Åtkomstmodifieraren `protected`     
     Beroendeinjektion                   CHECK
 
