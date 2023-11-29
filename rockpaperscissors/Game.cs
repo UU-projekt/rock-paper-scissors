@@ -42,6 +42,11 @@ namespace rockpaperscissors
 
         public Standing RoundStanding
         {
+            // Denna getter returnerar en struct som innehåller antalet rundor varje spelare har vunnit
+
+            // 1: här använder vi computed properties
+            // 2: vi använder detta genom att istället för att ge "RoundStanding" ett diskret värde så definierar vi en sk getter
+            // 3: vi använder detta eftersom det variabeln syftar till (hur många rundor en spelare har vunnit) är dynamiskt och är något vi vill räkna ut när variabeln anropas 
             get
             {
                 int p1Wins = 0, p2Wins = 0;
@@ -52,7 +57,7 @@ namespace rockpaperscissors
                     else if (e.Result == Outcome.Loss) p2Wins += 1;
                 }
 
-                    return new Standing { player1RoundsWon = p1Wins, player2RoundsWon = p2Wins };
+                return new Standing { player1RoundsWon = p1Wins, player2RoundsWon = p2Wins };
 
             }
         }
@@ -63,10 +68,16 @@ namespace rockpaperscissors
             RoundsLeft = roundsLeft;
         }
 
+        /// <summary>
+        ///     Denna fuktion tar spelarnas inputs och skriver dom till variabeln ut-variabeln roundReslut. Funktionen kommer returnera true så länge ingen spelare
+        ///     överstiger den valda mängden rundor som krävs för att vinna
+        /// </summary>
+        /// <param name="roundResult"></param>
+        /// <returns></returns>
         public bool Round(out Round roundResult)
         {
-            var m1 = p1.move.GetMove();
-            var m2 = p2.move.GetMove();
+            var m1 = p1.Move();
+            var m2 = p2.Move();
 
             roundResult = new rockpaperscissors.Round() { Result = Logic.Wins(m1, m2), p1Move = m1, p2Move = m2 };
 
@@ -80,6 +91,12 @@ namespace rockpaperscissors
 
         public class Logic
         {
+            /// <summary>
+            ///     Denna funktion tar emot två enum-värden och listar ut om det första draget vinner, förlorar, eller är lika med den andra spelarens drag
+            /// </summary>
+            /// <param name="move1">Första spelarens drag. Return-värdet är relativt till detta värde. Dvs om detta drag vinner mot moståndarens ("move2") så kommer Outcome.Win returneras</param>
+            /// <param name="move2"></param>
+            /// <returns>rundans resultat. Win, Loss, eller Tie</returns>
             public static Outcome Wins(Move move1, Move move2)
             {
                 // Gör om enum till int

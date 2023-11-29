@@ -75,11 +75,18 @@ namespace rockpaperscissors
         }
     }
 
+
+    // 1: här använder vi en abstrakt klass
+    // 2: vi använder abstrakta klasser för att skapa ett kontrakt som klasser som ärver behöver uppfylla
+    // 3: Vi använder detta då vi vill ha flera olika GameMessages men med olika implementationer
     public abstract class GameMessage
     {
         public abstract void Show();
     }
 
+    // 1: här använder vi arv av klasser
+    // 2: vi använder arv av klasser för att skapa en klass som utökar en redan existerande klass med flera funktioner
+    // 3: vi använder detta för att utöka klassen "GameMessage"
     internal class Win : GameMessage
     {
         string Winner;
@@ -96,10 +103,14 @@ namespace rockpaperscissors
     internal class Player
     {
         // 1: Här använder vi Beroendeinjektion
-        // 2: Klassen har en implm av IPlayer som har en funktion där spelarens drag väljs
+        // 2: Klassen har en impl av IPlayer som har en funktion där spelarens drag väljs
         // 3:
         // - Vi använder detta för att enkelt kunna implementera olika typer av inputs för val av drag.
         // - Detta låter oss enkelt implementera en AI-spelare, en riktig spelare, osv utan att behöva göra stora ändringar i koden   
+
+        // 1: här använder vi också objektkomposition
+        // 2: Vi använder detta genom att klassen player innehåller en instans av en klass som implementerar IMoveHehaviour eller INameSelector
+        // 3: I detta fall kommer båda från en instans av PersonPlayer eller AiPlayer
         public IMoveBehaviour move;
         public INameSelector name;
         public string Name { get; private set; }
@@ -121,5 +132,8 @@ namespace rockpaperscissors
         {
 
         }
+
+        public Game.Move Move()
+            => this.move.GetMove();
     }
 }
