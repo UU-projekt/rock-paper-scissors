@@ -20,15 +20,20 @@ namespace rockpaperscissors
    \|_________\|_________|       
      Sten       Sax        Påse
 ";
+
+        // En metod som används för att enkelt skriva ut text i färg. Återställer automatiskt konsolens färg till standarden efter funktionen har printat
         public static void ColourWrite(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.Write(message);
             Console.ResetColor();
         }
+
+        // En helper-metod för att skriva ut en ny rad med ColourWrite
         public static void ColourLog(string message, ConsoleColor colour)
             => ColourWrite($"{message}\n", colour);
 
+        // Denna metod skriver ut en prompt i konsolen i valfri färg och tar input från användaren. Använderns svar går också att välja färg på
         public static string? Ask(string question, ConsoleColor promptColour, ConsoleColor answerColour)
         {
             ColourWrite(question, promptColour);
@@ -44,6 +49,9 @@ namespace rockpaperscissors
         {
             return Ask(question, promptColour, ConsoleColor.White);
         }
+
+        // En boolisk metod som tar in information från anvädnaren angående val av spelare. Värdet av boolen används sedan för att sätta igång en AI eller
+        // Spela mot en annan spelare.
         public static Boolean PlayAgainstBot()
         {
             Console.Write("Vill du spela mot AI (");
@@ -59,6 +67,7 @@ namespace rockpaperscissors
             return res.ToLower()[0] == 'j';
         }
 
+        // Metoden som presneterar våra namn och resterande intro, logan etfc
         public static void Intro()
         {
             ColourLog("Arvin & Jonathan presenterar...", ConsoleColor.DarkGray);

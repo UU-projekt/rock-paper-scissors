@@ -39,11 +39,15 @@ namespace rockpaperscissors
         Game.Move IMoveBehaviour.GetMove()
         {
             string? move = Menu.Ask($"{Name}s drag: ", ConsoleColor.White, ConsoleColor.Blue);
+
+            //Om inget riktigt drag skrivs in så har vi en defualt på sten
             if (move == null || string.IsNullOrWhiteSpace(move)) move = "sten";
 
+            // denna bit av kod väljet drag baserat på användarens input
             Game.Move m = Game.Move.Sten;
 
-            switch(move.ToLower().Trim())
+            // här använder vi en switch för att tyda spelarens input
+            switch (move.ToLower().Trim())
             {
                 case "sten":
                     m = Game.Move.Sten;
@@ -60,13 +64,17 @@ namespace rockpaperscissors
         }
     }
 
+    //Klassen för AI spelaren, den använder interface från IMoveBehaviour och INameSelector
     public class AiPlayer : IMoveBehaviour, INameSelector
     {
+        // En funktion som returnerar string som vi anvädner för att ge ett namn till botten
+        // Denna funktion krävs för att uppfylla kraven från INameSelector
         public string GetName()
         {
             return "Botten Anna";
         }
 
+        // Generar ett slumpmäsigt drag
         Game.Move IMoveBehaviour.GetMove()
         {
             var r = new Random();

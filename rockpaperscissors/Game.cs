@@ -17,10 +17,11 @@ namespace rockpaperscissors
 
     internal class Game
     {
+        // Här skapas en enum med olika värden. Dessa värder representerar de drag du kan göra i sten sax påse
         public enum Move { Sten = 0, Påse = 1, Sax = 2 };
         public enum Outcome { Win, Loss, Tie }
 
-        public List<Round> Rounds;
+        protected List<Round> Rounds;
         private int RoundsLeft;
         public Player p1 { get; init; }
         public Player p2 { get; init; }
@@ -31,6 +32,7 @@ namespace rockpaperscissors
             public int player2RoundsWon { get; set; }
         }
 
+        // Denna getter gör att man enkelt kan få fram vinnaren av ett spel genom att använda .Winner variabeln på en instans av Game
         public Player Winner
         {
             get
@@ -76,15 +78,20 @@ namespace rockpaperscissors
         /// <returns></returns>
         public bool Round(out Round roundResult)
         {
+            // Ta inputs från båda spelare
             var m1 = p1.Move();
             var m2 = p2.Move();
 
+            // Skapa en instans av Round som skickas tillbaka i out variabeln för vidare användning
             roundResult = new rockpaperscissors.Round() { Result = Logic.Wins(m1, m2), p1Move = m1, p2Move = m2 };
 
+            // Lägg till rundan i klassens lista över rundor
             Rounds.Add(roundResult);
 
+            // Hämta spelets nuvarande status för att ta reda på om en till runda ska köras
             var standing = this.RoundStanding;
 
+            // om en till runda ska köras så returneras true
             return standing.player1RoundsWon < RoundsLeft && standing.player2RoundsWon < RoundsLeft;
         }
 
@@ -99,10 +106,11 @@ namespace rockpaperscissors
             /// <returns>rundans resultat. Win, Loss, eller Tie</returns>
             public static Outcome Wins(Move move1, Move move2)
             {
-                // Gör om enum till int
+                // Gör om enum till int för att logiken ska fungera
                 int you = (int)move1, foe = (int)move2;
 
-                // Allt jag ber om är guds förlåtelse efter detta underverk till kodrad
+                // Denna matematiska funktion granskar första spalrens (you) drag och jämför med motståndaren (foe)
+                // Modulus används för att värdet ska "slå över" om värdet är Move.Sax
                 if (you == ((foe + 1) % 3))
                 {
                     return Outcome.Win;

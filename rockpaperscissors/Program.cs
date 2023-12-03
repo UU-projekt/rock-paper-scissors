@@ -2,32 +2,30 @@
 using rockpaperscissors;
 
 /**
- * 
-    Inkapsling / Informationsgömning    CHECK
-    Overloading av instansmetoder       CHECK
-    Overloading av konstruktorer        CHECK
-    Computed properties                 CHECK
-    Objektkomposition                   CHECK
-    Interfaces                          CHECK
-    Abstrakta klasser                   CHECK   
-    Subtypspolymorfism
-    Multipla gränssnitt                 CHECK
-    Arv av klasser                      CHECK
-    Default interface methods
-    Konstruktor-kedjning                CHECK
-    Åtkomstmodifieraren `protected`     
-    Beroendeinjektion                   CHECK
-
-
- * 
- * 
- * 
+ *   Inkapsling / Informationsgömning    CHECK
+ *   Overloading av instansmetoder       CHECK
+ *   Overloading av konstruktorer        CHECK
+ *   Computed properties                 CHECK
+ *   Objektkomposition                   CHECK
+ *   Interfaces                          CHECK
+ *   Abstrakta klasser                   CHECK   
+ *   Subtypspolymorfism
+ *   Multipla gränssnitt                 CHECK
+ *   Arv av klasser                      CHECK
+ *   Default interface methods
+ *   Konstruktor-kedjning                CHECK
+ *   Åtkomstmodifieraren `protected`     
+ *   Beroendeinjektion                   CHECK  
  */
+
+//Visar introt 
 Menu.Intro();
 
+//Skapar objekt som ska representera spelare
 Player p1 = new Player();
 Player p2;
 
+//Kollar om spelaren vill köra mot en bot eller riktig människa
 if (Menu.PlayAgainstBot())
 {
     p2 = new Player(new AiPlayer());
@@ -36,8 +34,11 @@ if (Menu.PlayAgainstBot())
 Game game = new Game(5) { p1 = p1, p2 = p2 };
 
 int roundCounter = 0;
-while(game.Round(out Round result))
+
+// här körs själva game-loopen. Kommer att köras tills en spelare har vunnit 5 ggr
+while (game.Round(out Round result))
 {
+    // updatera variabeln som kollar hur många rundor som har körts
     roundCounter++;
     Console.WriteLine("Runda " + roundCounter + ": ");
 
@@ -64,5 +65,6 @@ while(game.Round(out Round result))
 var endOfGameStanding = game.RoundStanding;
 var winnerMessage = new Win(game.Winner);
 
+// Visa meddelandet som säger vem som vann
 winnerMessage.Show();
 Console.WriteLine($"{p1.Name}: {endOfGameStanding.player1RoundsWon}\n{p2.Name}: {endOfGameStanding.player2RoundsWon}");
