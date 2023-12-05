@@ -38,7 +38,8 @@ namespace rockpaperscissors
 
         Game.Move IMoveBehaviour.GetMove()
         {
-            string? move = Menu.Ask($"{Name}s drag: ", ConsoleColor.White, ConsoleColor.Blue);
+            string prompt = $"{Name}s drag: ";
+            string? move = Menu.Ask(prompt, ConsoleColor.White, ConsoleColor.Blue);
 
             //Om inget riktigt drag skrivs in så har vi en defualt på sten
             if (move == null || string.IsNullOrWhiteSpace(move)) move = "sten";
@@ -59,6 +60,9 @@ namespace rockpaperscissors
                     m = Game.Move.Påse;
                     break;
             }
+
+            Console.SetCursorPosition(prompt.Length, Console.GetCursorPosition().Top - 1);
+            Console.Write("**********\n");
 
             return m;
         }

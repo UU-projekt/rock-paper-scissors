@@ -31,7 +31,7 @@ if (Menu.PlayAgainstBot())
     p2 = new Player(new AiPlayer());
 } else p2 = new Player();
 
-Game game = new Game(5) { p1 = p1, p2 = p2 };
+Game game = new Game(3) { p1 = p1, p2 = p2 };
 
 int roundCounter = 0;
 
