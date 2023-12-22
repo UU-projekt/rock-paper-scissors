@@ -8,86 +8,6 @@ namespace rockpaperscissors
 {
 
 
-    // 1: här använder vi interface
-    // 2: vi skapar ett interface med dom funktioner vi vill ha                                 
-    // 3: vi använder detta för att kunna använda oss av dependency injection i Player klassen  
-    interface IMoveBehaviour : INameSelector
-    {
-        public abstract Game.Move GetMove();
-    }
-
-    interface INameSelector
-    {
-        public abstract string GetName();
-    }
-
-    // 1: här använder vi multibla intefaces
-    // 2: vi använder detta genom att ange de intefaces vi vill att vår klass använder separerat med kommatäcken
-    // 3: vi har flera olika interfaces som vi vill att klassen implementerar
-    public class PersonPlayer : IMoveBehaviour, INameSelector
-    {
-        private string? Name;
-        public string GetName()
-        {
-            //Menu.ColourWrite("Spelarens namn: ", ConsoleColor.Magenta);
-            string? name = Menu.Ask("Spelarens namn: ", ConsoleColor.White, ConsoleColor.Magenta);
-            if(name == null) return GetName();
-            Name = name;
-            return name;
-        }
-
-        Game.Move IMoveBehaviour.GetMove()
-        {
-            string prompt = $"{Name}s drag: ";
-            string? move = Menu.Ask(prompt, ConsoleColor.White, ConsoleColor.Blue);
-
-            //Om inget riktigt drag skrivs in så har vi en defualt på sten
-            if (move == null || string.IsNullOrWhiteSpace(move)) move = "sten";
-
-            // denna bit av kod väljet drag baserat på användarens input
-            Game.Move m = Game.Move.Sten;
-
-            // här använder vi en switch för att tyda spelarens input
-            switch (move.ToLower().Trim())
-            {
-                case "sten":
-                    m = Game.Move.Sten;
-                    break;
-                case "sax":
-                    m = Game.Move.Sax;
-                    break;
-                case "påse":
-                    m = Game.Move.Påse;
-                    break;
-            }
-
-            Console.SetCursorPosition(prompt.Length, Console.GetCursorPosition().Top - 1);
-            Console.Write("**********\n");
-
-            return m;
-        }
-    }
-
-    //Klassen för AI spelaren, den använder interface från IMoveBehaviour och INameSelector
-    public class AiPlayer : IMoveBehaviour, INameSelector
-    {
-        // En funktion som returnerar string som vi anvädner för att ge ett namn till botten
-        // Denna funktion krävs för att uppfylla kraven från INameSelector
-        public string GetName()
-        {
-            return "Botten Anna";
-        }
-
-        // Generar ett slumpmäsigt drag
-        Game.Move IMoveBehaviour.GetMove()
-        {
-            var r = new Random();
-
-            return (Game.Move) r.Next(0,3);
-        }
-    }
-
-
     // 1: här använder vi en abstrakt klass
     // 2: vi använder abstrakta klasser för att skapa ett kontrakt som klasser som ärver behöver uppfylla
     // 3: Vi använder detta då vi vill ha flera olika GameMessages men med olika implementationer
@@ -130,7 +50,13 @@ namespace rockpaperscissors
         public Player(IMoveBehaviour move)
         {
             this.move = move;
-            this.Name = move.GetName();
+            this.name = move;
+
+            string n = move.GetName();
+
+            if (n == null) n = "Spelare";
+
+            Name = n;
         }
 
         // 1: här använder vi constructor chaining

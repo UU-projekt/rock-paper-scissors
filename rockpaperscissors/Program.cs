@@ -18,6 +18,19 @@ using rockpaperscissors;
  *   Beroendeinjektion                   CHECK  
  */
 
+/*
+ * Vänligen lägg varje egen klass / eget gränssnitt i en egen fil. 
+ * GODKÄNT: - Computed properties - Overloading av instansmetoder - Interfaces - Beroendeinjektion - Objektkomposition - Constructor-chaining - Constructor overloading 
+ * KOMPLETTERING: - Multiple interfaces: Ej meningsfullt. Gränssnittet "IMoveBehavior" ärver redan av "INameSelector". Detta innebär att ni inte behöver explicit deklarera att "PersonPlayer" implementerar två gränssnitt. - 
+ * Abstrakta klasser: Ej meningsfullt
+ * Jag förstår inte vilket värde denna abstraktion tillför. - Arv av klasser: Se ovan kommentar.
+ * 
+ * fix:
+ * - arv av klasser
+ * - abstrakta klasser
+ * - multiple interfaces
+ */
+
 //Visar introt 
 Menu.Intro();
 
