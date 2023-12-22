@@ -8,9 +8,16 @@ using System.Threading.Tasks;
 namespace rockpaperscissors
 {
 
-    internal interface IDiskWritable
+    public struct Match
     {
-        public string[] ReadFile(string path);
+        internal Round[] rounds;
+        internal string P1Name;
+        internal string P2Name;
+    }
+
+    internal interface IDiskWritable<T>
+    {
+        public T ReadFile(string path);
         public void WriteFile(string path);
     }
 
@@ -19,7 +26,7 @@ namespace rockpaperscissors
     // 3:
     // -    Vi vill att klassen implementerar IDiskWritable vilket är ett interface vi har skrivit men även
     // -    att det inbyggda interfaces IDisposable implementeras.
-    internal class ScoreBoard : IDiskWritable, IDisposable
+    internal class ScoreBoard : IDiskWritable<Match[]>, IDisposable
     {
         private string? ioPath;
 
@@ -41,12 +48,38 @@ namespace rockpaperscissors
             WriteFile("scoreboard.csv");
         }
 
-        public string[] ReadFile(string filename)
+        public Match[] ReadFile(string filename)
         {
+            List<Match> matches = new List<Match>();
             using (var sr = new StreamReader(Path.Join(this.ioPath, filename)))
             {
                 string str = sr.ReadToEnd();
-                return str.Split('\n');
+                var matchesRaw = str.Split('!');
+
+                foreach(string match in matchesRaw)
+                {
+                    var lines = match.Split('\n');
+                    int roundsPlayed = lines.Length - 3;
+                    string p1name = lines[0], p2name = lines[1], winner = lines[3];
+
+                    Round[] rounds = new Round[roundsPlayed];
+
+                    for(int i = 3; i < lines.Length; i++)
+                    {
+                        string[] data = lines[i].Split(',');
+
+                        // TODO: add type conv str -> Game.Outcome & str -> Game.Move
+                        rounds[i - 3] = new Round
+                        {
+                            p1Move = data[0],
+                            p2Move = data[1],
+                            Result = data[2] as Game.Outcome
+                        };
+                    }
+                    matches.Add(new Match { rounds = rounds, P1Name = p1name, P2Name = p2name });
+                }
+
+                return matches.ToArray();
             }
         }
 
