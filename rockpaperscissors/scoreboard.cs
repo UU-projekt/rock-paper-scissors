@@ -1,28 +1,8 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace rockpaperscissors
 {
-
-    public struct Match
-    {
-        internal Round[] rounds;
-        internal string P1Name;
-        internal string P2Name;
-        internal string Winner;
-    }
-
-    internal interface IDiskWritable<T>
-    {
-        public T ReadFile(string path);
-        public void WriteFile(string path);
-    }
-
     // 1: här använder vi multibla intefaces
     // 2: vi använder detta genom att ange de intefaces vi vill att vår klass använder separerat med kommatäcken
     // 3:

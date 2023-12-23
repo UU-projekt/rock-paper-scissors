@@ -1,4 +1,6 @@
-﻿namespace rockpaperscissors
+﻿using rockpaperscissors.Sounds;
+
+namespace rockpaperscissors
 {
     public class PersonPlayer : IMoveBehaviour, INameSelector
     {
@@ -7,7 +9,11 @@
         {
             //Menu.ColourWrite("Spelarens namn: ", ConsoleColor.Magenta);
             string? name = Menu.Ask("Spelarens namn: ", ConsoleColor.White, ConsoleColor.Magenta);
-            if(name == null) return GetName();
+            if (string.IsNullOrEmpty(name)) 
+            {
+                new Error().Play(true);
+                return GetName();
+             }
             Name = name;
             return name;
         }

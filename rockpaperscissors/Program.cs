@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using rockpaperscissors;
+using rockpaperscissors.Sounds;
 
 /**
  *   Inkapsling / Informationsgömning    CHECK
@@ -26,9 +27,9 @@ using rockpaperscissors;
  * Jag förstår inte vilket värde denna abstraktion tillför. - Arv av klasser: Se ovan kommentar.
  * 
  * fix:
- * - arv av klasser
- * - abstrakta klasser
- * - multiple interfaces CHECK
+ * - arv av klasser                     C
+ * - abstrakta klasser                  C
+ * - multiple interfaces                CHECK
  */
 
 //Visar introt 
@@ -101,3 +102,5 @@ using(ScoreBoard s = new ScoreBoard()) {
     winnerMessage.Show();
     Console.WriteLine($"{p1.Name}: {endOfGameStanding.player1RoundsWon}\n{p2.Name}: {endOfGameStanding.player2RoundsWon}");
 }
+
+new GameOver().Play();

@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 namespace rockpaperscissors
 {
 
-
-    // 1: här använder vi en abstrakt klass
-    // 2: vi använder abstrakta klasser för att skapa ett kontrakt som klasser som ärver behöver uppfylla
-    // 3: Vi använder detta då vi vill ha flera olika GameMessages men med olika implementationer
     public abstract class GameMessage
     {
         public abstract void Show();
     }
 
-    // 1: här använder vi arv av klasser
-    // 2: vi använder arv av klasser för att skapa en klass som utökar en redan existerande klass med flera funktioner
-    // 3: vi använder detta för att utöka klassen "GameMessage"
     internal class Win : GameMessage
     {
         string Winner;

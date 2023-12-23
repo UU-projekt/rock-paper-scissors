@@ -1,4 +1,5 @@
-﻿using System;
+﻿using rockpaperscissors.Sounds;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,6 +73,7 @@ namespace rockpaperscissors
         {
             ColourLog("Arvin & Jonathan presenterar...", ConsoleColor.DarkGray);
             ColourLog(logo, ConsoleColor.DarkRed);
+            new MenuJingle().Play();
             Console.WriteLine("Ni spelar försten till 3. Du anger vad du vill spela genom att skriva sten, sax, eller påse.");
         }
     }
