@@ -28,11 +28,24 @@ using rockpaperscissors;
  * fix:
  * - arv av klasser
  * - abstrakta klasser
- * - multiple interfaces
+ * - multiple interfaces CHECK
  */
 
 //Visar introt 
 Menu.Intro();
+
+if(Menu.Ask("Vill du se scoreboard (ja/nej)? ", ConsoleColor.Magenta) == "ja")
+{
+    ScoreBoard sb = new ScoreBoard();
+
+    Menu.ColourLog("Scoreboard:", ConsoleColor.DarkYellow);
+    foreach(Match m in sb.ReadFile("scoreboard.csv"))
+    {
+        Console.WriteLine($"!   {m.P1Name} vs {m.P2Name} ({m.Winner} vann, {m.rounds.Length} drag)  !");
+    }
+
+    Console.WriteLine("#####");
+}
 
 //Skapar objekt som ska representera spelare
 Player p1 = new Player();
@@ -48,36 +61,43 @@ Game game = new Game(3) { p1 = p1, p2 = p2 };
 
 int roundCounter = 0;
 
-// här körs själva game-loopen. Kommer att köras tills en spelare har vunnit 5 ggr
-while (game.Round(out Round result))
-{
-    // updatera variabeln som kollar hur många rundor som har körts
-    roundCounter++;
-    Console.WriteLine("Runda " + roundCounter + ": ");
 
-
-
-    string winner = p1.Name;
-
-    Menu.ColourWrite(p1.Name + ": ", ConsoleColor.Blue);
-    Console.WriteLine(result.p1Move);
-
-    Menu.ColourWrite(p2.Name + ": ", ConsoleColor.Red);
-    Console.WriteLine(result.p2Move);
-
-    if (result.Result == Game.Outcome.Loss) winner = p2.Name;
-    else if (result.Result == Game.Outcome.Tie)
+using(ScoreBoard s = new ScoreBoard()) {
+    s.SetNames(p1.Name, p2.Name);
+    // här körs själva game-loopen. Kommer att köras tills en spelare har vunnit 5 ggr
+    while (game.Round(out Round result))
     {
-        Console.WriteLine("Lika! Ingen vann\n", ConsoleColor.Blue);
-        continue;
+        // updatera variabeln som kollar hur många rundor som har körts
+        roundCounter++;
+        Console.WriteLine("Runda " + roundCounter + ": ");
+
+
+
+        string winner = p1.Name;
+
+        Menu.ColourWrite(p1.Name + ": ", ConsoleColor.Blue);
+        Console.WriteLine(result.p1Move);
+
+        Menu.ColourWrite(p2.Name + ": ", ConsoleColor.Red);
+        Console.WriteLine(result.p2Move);
+
+        if (result.Result == Game.Outcome.Loss) winner = p2.Name;
+        else if (result.Result == Game.Outcome.Tie)
+        {
+            Console.WriteLine("Lika! Ingen vann\n", ConsoleColor.Blue);
+            continue;
+        }
+
+        s.AddRound(result.p1Move, result.p2Move);
+
+        Console.WriteLine($"{winner} vann!\n");
     }
 
-    Console.WriteLine($"{winner} vann!\n");
+    var endOfGameStanding = game.RoundStanding;
+    var winnerMessage = new Win(game.Winner);
+    s.SetWinner(game.Winner.Name);
+
+    // Visa meddelandet som säger vem som vann
+    winnerMessage.Show();
+    Console.WriteLine($"{p1.Name}: {endOfGameStanding.player1RoundsWon}\n{p2.Name}: {endOfGameStanding.player2RoundsWon}");
 }
-
-var endOfGameStanding = game.RoundStanding;
-var winnerMessage = new Win(game.Winner);
-
-// Visa meddelandet som säger vem som vann
-winnerMessage.Show();
-Console.WriteLine($"{p1.Name}: {endOfGameStanding.player1RoundsWon}\n{p2.Name}: {endOfGameStanding.player2RoundsWon}");

@@ -33,6 +33,45 @@ namespace rockpaperscissors
             }
         }
 
+        public static Game.Move GetMoveFromString(string move)
+        {
+            Game.Move m = Game.Move.Sten;
+
+            // här använder vi en switch för att tyda spelarens input
+            switch (move.ToLower().Trim())
+            {
+                case "sten":
+                    m = Game.Move.Sten;
+                    break;
+                case "sax":
+                    m = Game.Move.Sax;
+                    break;
+                case "påse":
+                    m = Game.Move.Påse;
+                    break;
+            }
+
+            return m;
+        }
+
+        public static Game.Outcome GetOutcomeFromString(string outcome)
+        {
+            Game.Outcome m = Game.Outcome.Tie;
+
+            // här använder vi en switch för att tyda spelarens input
+            switch (outcome.ToLower().Trim())
+            {
+                case "win":
+                    m = Game.Outcome.Win;
+                    break;
+                case "loss":
+                    m = Game.Outcome.Loss;
+                    break;
+            }
+
+            return m;
+        }
+
         public Standing RoundStanding
         {
             // Denna getter returnerar en struct som innehåller antalet rundor varje spelare har vunnit
